@@ -116,7 +116,7 @@ int ALU_1bit(int a, int b, int B_inv, int cin, string op, int& cout)
 		return (a | b);
 		break;
 
-	case 10: // ADD
+	case 10: // ADD // do B-inv still
 		cout = (a & b) | (cin & (a ^ b));
 		return (a ^ b ^ cin);
 		break;
