@@ -9,7 +9,7 @@ int OR_gate(int a, int b);
 int full_adder(int a, int b, int cin, int& cout);
 int mux_2x1(int x1, int x2, int sel);
 int mux_4x1(int x1, int x2, int x3, int x4, string sel);
-int ALU_1bit
+int ALU_1bit(int a, int b, int B_inv, int cin, string op, int& cout);
 
 
 int XOR_gate(int a, int b);
