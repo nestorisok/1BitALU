@@ -104,6 +104,27 @@ int mux_4x1(int x1, int x2, int x3, int x4, string sel)
 
 }
 
+int ALU_1bit(int a, int b, int B_inv, int cin, string op, int& cout)
+{
+	switch (atoi(op.c_str()))
+	{
+	case 00: // AND
+		return (a & b);
+		break;
+
+	case 01: // OR
+		return (a | b);
+		break;
+
+	case 10: // ADD
+		cout = (a & b) | (cin & (a ^ b));
+		return (a ^ b ^ cin);
+		break;
+
+
+	}
+
+}
 
 
 int XOR_gate(int a, int b)
