@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <bitset>
 using namespace std;
 
 
@@ -19,26 +19,103 @@ int XOR_gate(int a, int b);
 int main()
 {
 	int a = 0;
-	int b = 1;
+	int b = 0;
 
-	int c = 0;
-	int d = 0;
+	int cinINP = 0;
+	int Binv = 0;
+	string opCode = "00";
 
-
-	int cinINP = 1;
-	int coutINP;
-	cout << "\na = " << a << "\nb = " << b << endl;
-	cout << "AND Result: " << AND_gate(a, b) << endl;
-
-	cout << "\na = " << a << "\nb = " << b << endl;
-	cout << "OR Result: " << OR_gate(a, b) << endl;
+	int res;
+	int coutINP = 0;
 
 
-	cout << "\na = " << a << "\nb = " << b << "\ncin = " << cinINP << endl;
-	cout << "ADD Result: " << full_adder(a, b, cinINP, coutINP) << endl;
-	cout << "cout = " << coutINP << endl;
+	//cout << "\ta\tb\tcin\tBinv\top\tresult\tcout" << endl;
+	//cout << "------------------------------------------------------------------------------" << endl;
 
-	cout << "Mux 4x1 = " << mux_4x1(a, b, c, d, "10") << endl;
+	////res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
+	////cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
+
+	// AND results
+	cout << "------------------------------------------------------------------------------" << endl;
+	cout << "\t\t AND results \t\t" << endl; 
+	cout << "------------------------------------------------------------------------------" << endl;
+	for (int i = 0; i < 8; i++)
+	{
+		a = (i >> 2) & 1;	// gets the left-most bit, since in code a = 
+		b = (i >> 1) & 1;
+		cinINP = (i >> 0) & 1;
+		Binv = 0;
+
+		opCode = "00"; // AND
+		res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
+
+		cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
+
+
+
+		//cout << opCode << endl; // makes our int to binary string we can use
+	}
+
+	cout << "------------------------------------------------------------------------------" << endl;
+	cout << "\t\t OR results \t\t" << endl;
+	cout << "\ta\tb\tcin\tBinv\top\tresult\tcout" << endl;
+	cout << "------------------------------------------------------------------------------" << endl;
+	for (int i = 0; i < 8; i++)
+	{
+		a = (i >> 2) & 1;	// gets the left-most bit, since in code a = 
+		b = (i >> 1) & 1;
+		cinINP = (i >> 0) & 1;
+		Binv = 0;
+
+		opCode = "01"; // OR
+		res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
+
+		cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
+
+
+
+		//cout << opCode << endl; // makes our int to binary string we can use
+	}
+	cout << "------------------------------------------------------------------------------" << endl;
+	cout << "\t\t ADD results \t\t" << endl;
+	cout << "\ta\tb\tcin\tBinv\top\tresult\tcout" << endl;
+	cout << "------------------------------------------------------------------------------" << endl;
+	for (int i = 0; i < 8; i++)
+	{
+		a = (i >> 2) & 1;	// gets the left-most bit, since in code a = 
+		b = (i >> 1) & 1;
+		cinINP = (i >> 0) & 1;
+		Binv = 0;
+
+		opCode = "10"; // ADD
+		res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
+
+		cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
+
+
+
+		//cout << opCode << endl; // makes our int to binary string we can use
+	}
+	//for (int j = 0; j < 3; j++)
+	//{
+
+	//	for (int i = 0; i < 16; i++)
+	//	{
+	//		a = (i >> 3) & 1;	// gets the left-most bit, since in code a = 
+	//		b = (i >> 2) & 1;
+	//		cinINP = (i >> 1) & 1;
+	//		Binv = (i >> 0) & 1;
+
+	//		opCode = bitset<2>(j).to_string();
+	//		res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
+
+	//		cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
+
+
+
+	//		//cout << opCode << endl; // makes our int to binary string we can use
+	//	}
+	//}
 
 	return 0;
 }
@@ -58,11 +135,6 @@ int OR_gate(int a, int b)
 
 int full_adder(int a, int b, int cin, int& cout)
 {
-	////XOR_gate(a, b); // initial XOR
-	//int sum = XOR_gate(XOR_gate(a, b), cin); // sum
-	////AND_gate(a, b); // initial AND
-	////AND_gate(XOR_gate(a, b), cin);
-	//cout = OR_gate(AND_gate(XOR_gate(a, b), cin), AND_gate(a, b));
 
 	int sum = (a ^ b ^ cin);
 	cout = (a & b) | (cin & (a ^ b));
@@ -75,7 +147,6 @@ int mux_2x1(int x1, int x2, int sel)
 {
 	
 	return ((sel == 0) ? x1 : x2); // If sel == 0, return x1, if sel != 0 return x2
-
 }
 
 int mux_4x1(int x1, int x2, int x3, int x4, string sel)
@@ -109,14 +180,21 @@ int ALU_1bit(int a, int b, int B_inv, int cin, string op, int& cout)
 	switch (atoi(op.c_str()))
 	{
 	case 00: // AND
+		cout = cin;
 		return (a & b);
 		break;
 
 	case 01: // OR
+		cout = cin;
 		return (a | b);
 		break;
 
-	case 10: // ADD // do B-inv still
+	case 10: // ADD
+
+		// if B_inv = 0 and b = 1, b = 1 or if b = 0, b = 0; 
+		// if B_inv = 1 and b = 1, b = 0, or if b = 0, b = 1
+		b = (B_inv ^ b); 
+		
 		cout = (a & b) | (cin & (a ^ b));
 		return (a ^ b ^ cin);
 		break;
@@ -124,11 +202,4 @@ int ALU_1bit(int a, int b, int B_inv, int cin, string op, int& cout)
 
 	}
 
-}
-
-
-int XOR_gate(int a, int b)
-{
-
-	return (a ^ b);
 }
