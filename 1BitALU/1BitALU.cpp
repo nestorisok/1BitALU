@@ -8,9 +8,6 @@ using namespace std;
 // either get 0 or 1. Allowing us to get every result for the 3 bits of a,b,CIN and applying the ALU function
 // Applying Binv to 0 for every loop since it is not being used, and having the result be the output of ALU function
 
-// Was going to make a function however assignment
-// Assignment shows AND having cin but no cout, in 2nd case on assignment but also shows a,b,cin being 1 and 
-// there being a carryout
 
 
 int AND_gate(int a, int b);
@@ -41,7 +38,7 @@ int main()
 }
 
 
-
+// Takes in string input to chose from different outputs
 void ALU_results(string inp)
 {
 	if (inp == "AND")
