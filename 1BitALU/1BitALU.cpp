@@ -1,6 +1,8 @@
 #include <iostream>
 #include <bitset>
 using namespace std;
+//
+
 
 
 int AND_gate(int a, int b);
@@ -11,8 +13,6 @@ int mux_2x1(int x1, int x2, int sel);
 int mux_4x1(int x1, int x2, int x3, int x4, string sel);
 int ALU_1bit(int a, int b, int B_inv, int cin, string op, int& cout);
 
-
-int XOR_gate(int a, int b);
 
 
 
@@ -28,32 +28,22 @@ int main()
 	int res;
 	int coutINP = 0;
 
-
-	//cout << "\ta\tb\tcin\tBinv\top\tresult\tcout" << endl;
-	//cout << "------------------------------------------------------------------------------" << endl;
-
-	////res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
-	////cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
-
 	// AND results
 	cout << "------------------------------------------------------------------------------" << endl;
 	cout << "\t\t AND results \t\t" << endl; 
+	cout << "\ta\tb\tcin\tBinv\top\tresult\tcout" << endl;
 	cout << "------------------------------------------------------------------------------" << endl;
 	for (int i = 0; i < 8; i++)
 	{
-		a = (i >> 2) & 1;	// gets the left-most bit, since in code a = 
-		b = (i >> 1) & 1;
-		cinINP = (i >> 0) & 1;
+		a = (i >> 2) & 1;	// gets the left-most bit
+		b = (i >> 1) & 1;	// gets the 2nd bit
+		cinINP = (i >> 0) & 1; // gets the right-most bit
 		Binv = 0;
-
 		opCode = "00"; // AND
+
 		res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
 
 		cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
-
-
-
-		//cout << opCode << endl; // makes our int to binary string we can use
 	}
 
 	cout << "------------------------------------------------------------------------------" << endl;
@@ -63,19 +53,16 @@ int main()
 	for (int i = 0; i < 8; i++)
 	{
 		a = (i >> 2) & 1;	// gets the left-most bit, since in code a = 
-		b = (i >> 1) & 1;
-		cinINP = (i >> 0) & 1;
+		b = (i >> 1) & 1;	// gets the 2nd bit
+		cinINP = (i >> 0) & 1; // gets the right-most bit
 		Binv = 0;
-
 		opCode = "01"; // OR
+
 		res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
 
 		cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
-
-
-
-		//cout << opCode << endl; // makes our int to binary string we can use
 	}
+
 	cout << "------------------------------------------------------------------------------" << endl;
 	cout << "\t\t ADD results \t\t" << endl;
 	cout << "\ta\tb\tcin\tBinv\top\tresult\tcout" << endl;
@@ -83,37 +70,46 @@ int main()
 	for (int i = 0; i < 8; i++)
 	{
 		a = (i >> 2) & 1;	// gets the left-most bit, since in code a = 
-		b = (i >> 1) & 1;
-		cinINP = (i >> 0) & 1;
+		b = (i >> 1) & 1;	// gets the 2nd bit
+		cinINP = (i >> 0) & 1; // gets the right-most bit
 		Binv = 0;
-
 		opCode = "10"; // ADD
+
 		res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
 
 		cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
-
-
-
-		//cout << opCode << endl; // makes our int to binary string we can use
 	}
+
+	cout << "------------------------------------------------------------------------------" << endl;
+	cout << "\t\t SUB results \t\t" << endl;
+	cout << "\ta\tb\tcin\tBinv\top\tresult\tcout" << endl;
+	cout << "------------------------------------------------------------------------------" << endl;
+	for (int i = 0; i < 8; i++)
+	{
+		a = (i >> 2) & 1;	// gets the left-most bit, since in code a = 
+		b = (i >> 1) & 1;	// gets the 2nd bit
+		cinINP = (i >> 0) & 1; // gets the right-most bit
+		Binv = 1;
+		opCode = "10"; // ADD/SUB in this case
+		
+		res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
+
+		cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
+	}
+
 	//for (int j = 0; j < 3; j++)
 	//{
-
-	//	for (int i = 0; i < 16; i++)
+	//	for (int i = 0; i < 8; i++)
 	//	{
-	//		a = (i >> 3) & 1;	// gets the left-most bit, since in code a = 
-	//		b = (i >> 2) & 1;
-	//		cinINP = (i >> 1) & 1;
-	//		Binv = (i >> 0) & 1;
+	//		a = (i >> 2) & 1;	// gets the left-most bit, since in code a = 
+	//		b = (i >> 1) & 1;	// gets the 2nd bit
+	//		cinINP = (i >> 0) & 1; // gets the right-most bit
+	//		Binv = 0;
+	//		opCode = bitset<2>(j).to_string(); // ADD/SUB in this case
 
-	//		opCode = bitset<2>(j).to_string();
 	//		res = ALU_1bit(a, b, Binv, cinINP, opCode, coutINP);
 
 	//		cout << "\t" << a << "\t" << b << "\t" << cinINP << "\t" << Binv << "\t" << opCode << "\t" << res << "\t" << coutINP << endl;
-
-
-
-	//		//cout << opCode << endl; // makes our int to binary string we can use
 	//	}
 	//}
 
@@ -180,12 +176,10 @@ int ALU_1bit(int a, int b, int B_inv, int cin, string op, int& cout)
 	switch (atoi(op.c_str()))
 	{
 	case 00: // AND
-		cout = cin;
 		return (a & b);
 		break;
 
 	case 01: // OR
-		cout = cin;
 		return (a | b);
 		break;
 
